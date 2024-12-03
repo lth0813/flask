@@ -1,0 +1,9 @@
+Flask 실습에 들어가기 앞서
+1. 파이썬 설치
+2. 가상 환경 설정
+ 생성
+ -> python -m venv venv
+ 활성화
+ -> venv\Scripts\activate
+3. Flask 설치
+ -> pip install flask

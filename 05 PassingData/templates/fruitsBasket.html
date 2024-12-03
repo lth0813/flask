@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruits Basket</title>
+  </head>
+  <body>
+    <!-- Flask가 전달 받은 데이터를 채움 -->
+    <h1>Fruits List</h1>
+    <h2>Basket 1 :</h2>
+    <h3>{{fruit}}</h3>
+    <hr />
+    <h2>Basket 2 :</h2>
+    <ul>
+      <!-- Jinja2 반복문 -->
+      {% for fruits in fruit_list %}
+      <li>{{ fruits }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
