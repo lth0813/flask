@@ -19,6 +19,47 @@ class User(db.Model):
 with app.app_context():
     db.create_all()
 
+# Create
 @app.route('/create', methods=['POST'])
 def create():
     data = request.json
+    new_user = User(username=data['username'], email=data['email'])
+    db.session.add(new_user)
+    db.session.commit()
+    return {"message": "회원이 등록되었습니다."}
+
+# Read
+@app.route('/read', methods=['GET'])
+def read():
+    users = User.query.all()
+    return [{"ID": user.id, "UserName": user.username, "Email": user.email} for user in users]
+
+# Update
+@app.route('/update/<int:user_id>', methods=['PUT'])
+def update(user_id):
+    # 특정 사용자 검색
+    user = User.query.get(user_id)
+    if not user:
+        return {"error" : "회원정보를 찾을 수 없습니다."}, 404
+    
+    data = request.json
+    user.username = data.get('username', user.username)
+    user.email = data.get('email', user.email)
+    db.session.commit()
+
+    return {"message" : "회원정보가 수정되었습니다.", "user" : {"ID": user.id, "UserName": user.username}}
+
+# Delete
+@app.route('/delete/<int:user_id>', methods=['DELETE'])
+def delete(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return {"error" : "회원정보를 찾을 수 없습니다."}, 404
+    
+    db.session.delete(user)
+    db.session.commit()
+
+    return {"message": "해당 회원이 삭제되었습니다."}
+
+if __name__ == '__main__':
+    app.run(debug=True)
